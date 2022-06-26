@@ -31,9 +31,6 @@ def pre_train(epoch, train_loader, model, optimizer, args):
         if args.cuda:
             x1, x2 = x1.cuda(), x2.cuda()
         d1, d2, _ = model(x1, x2)
-        """In PyTorch, we need to set the gradients to zero before starting to
-        do backpropragation because PyTorch accumulates the gradients on
-        subsequent backward passes."""
         optimizer.zero_grad()
         loss = d1 + d2
         loss.backward()
@@ -104,53 +101,9 @@ def _eval(epoch, test_loader, model, criterion, args):
                 pred_ = pred
                 target_= target
 
-    
-    
-#        print(pred_.size())
-        #Accuracy metrics
         print('[Down Task Test Epoch: {0:4d}], loss: {1:.3f}, acc: {2:.3f}'.format(epoch, losses / step, acc / total * 100.))
 
         return acc / total * 100, logits_, pred_, target_
-def _eval_kmeans(test_loader, model, args):
-    model.eval()
-    c = 0
-    acc = 0
-    # Disabling gradient calculation for inference,
-    with torch.no_grad():
-        for data, target in test_loader:
-#            print(np.unique(target))
-            if args.cuda:
-                data, target = data.cuda(), target.cuda()
-          
-            logits = model(data)
-
-            try:
-                logits_ = torch.cat((logits_, logits))
-                target_ = torch.cat((target_, target))
-            except NameError:
-                logits_ = logits
-                target_ = target
-            
-            c += 1
-            if not c % 10000: print(c)   
-    
-    print(logits_.size())
-
-    from sklearn.cluster import KMeans, MiniBatchKMeans
-    kmeans = KMeans(n_clusters=args.n_classes,init='k-means++', n_init=10, n_jobs=1)
-    pred_ = kmeans.fit_predict(logits_.cpu().numpy())
-
-    # from sklearn.neighbors import KNeighborsClassifier
-    # neigh = KNeighborsClassifier()
-    # neigh.fit(logits_.cpu().numpy(), target_.cpu().numpy())
-    # pred_=neigh.predict(logits_.cpu().numpy())
-    
-    acc = cluster_acc(target_.cpu().numpy(), pred_)
-    print('Accuracy: ', acc * 100)
-    
-    return acc, logits_, pred_, target_
-
-
 def train_eval_down_task(down_model, down_train_loader, down_test_loader, args):
     down_optimizer = optim.SGD(down_model.parameters(), lr=args.down_lr, weight_decay=args.weight_decay, momentum=args.momentum)
     down_criterion = nn.CrossEntropyLoss()
@@ -159,20 +112,13 @@ def train_eval_down_task(down_model, down_train_loader, down_test_loader, args):
         if args.train_downtask:
             # down_train_loader has img1, target    
             for epoch in range(1, args.down_epochs + 1):
-                """Here I train my train set with output(img1,target) follow the downstream 
-                model using a crossentropy loss. Afterthat, I also evaluate the train set 
-                with the softmax, argmax prediction"""
                 _train(epoch, down_train_loader, down_model, down_optimizer, down_criterion, args)         
                 down_lr_scheduler.step()               
                 if epoch % args.print_intervals == 0:
                     acc, logits_, pred_, target_ = _eval(epoch, down_test_loader, down_model, down_criterion, args)
                     plotme(logits_, target_, True, epoch)
-            """Here I evaluate the model trained using the test loader """        
-        else:
-                epoch=0
+            """Model evaluation """        
         acc, logits_, pred_, target_ = _eval(epoch, down_test_loader, down_model, down_criterion, args) 
-    else:
-        acc, logits_, pred_, target_ = _eval_kmeans(down_test_loader, down_model, args) 
      
     return acc, logits_, pred_, target_
 
@@ -253,10 +199,9 @@ def main(args):
                 # ic(len(index_train_sub))
                 # ic(len(train_data))   
 
-            # Here I pre-trained the two branch of the Syamese Networks with their encoder
+            # Pre-trained the two branch of the Syamese Networks with their encoder
             # proyeccions and predictions using the cosine learning rate strategy.            
-            train_loss = pre_train(epoch, train_loader, model, optimizer, args)
-            # Here when I reached to 100 epochs I used the down_model to evaluate the down_train_loader       
+            train_loss = pre_train(epoch, train_loader, model, optimizer, args)   
 
             if epoch % args.print_intervals == 0:
                 save_checkpoint(model, optimizer, args, epoch)
@@ -288,27 +233,7 @@ def main(args):
     else:
         
        _, logits_, pred_, target_ = train_eval_down_task(down_model, down_train_loader, down_test_loader, args)
-    #    print(logits_.shape)
-    #    print(softmax_.shape)
-    #    print(softmax_.cpu().numpy().mean(0).shape)
-       
-    #    metrics_(args.save_dir, target_, pred_, args)
        plotme(logits_, target_, True, epoch)
-
-    #    checkpoints = 'checkpoints/checkpoint_pretrain_model_4cluster_0.8margin.pth'
-    #    model = Model(args,checkpoints)
-    #    down_model_db = DownStreamModel(args, checkpoints)
-
-    #    _, logits_, pred_, target_, softmax_db = train_eval_down_task(down_model, down_train_loader, down_test_loader, args)
-
-    #    keys = ["Soybean", "Maize", "Cotton", "Others"]
-    #    xx = np.arange(len(keys))
-    #    plt.bar(xx, softmax_.cpu().numpy().mean(0), width=0.2, label="Standard CNN")
-    #    plt.bar(xx+0.2,softmax_db.cpu().numpy().mean(0), width=0.2, label="DB-VAE")
-    #    plt.xticks(xx, keys); 
-    #    plt.title("Network predictions on test dataset")
-    #    plt.ylabel("Probability"); plt.legend(loc="upper left")
-    #    plt.savefig('class_prob.png', dpi=300)
 
 if __name__ == '__main__':
 
