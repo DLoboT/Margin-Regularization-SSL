@@ -31,7 +31,7 @@ python cl_cv.py
 
 <p align="center">
   <img 
-    width="1000"
+    width="800"
     height="500"
     src = simsiam_last.png
   >
