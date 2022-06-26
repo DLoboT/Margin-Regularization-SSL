@@ -13,8 +13,8 @@ This paper presents a self-supervised approach that uses the redundancy reductio
 Campo Verde (CV), Mato Grosso state. Luis Eduardo Magalhães (LEM), Bahia state. 
 <p align="center">
   <img 
-    width="1000"
-    height="1000"
+    width="500"
+    height="500"
     src = study_area_CV.png
   >
 </p>
