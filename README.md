@@ -10,7 +10,7 @@ This paper presents a self-supervised approach that uses the redundancy reductio
 
 ### Dataset
 
-Campo Verde (CV), Mato Grosso state. Luis Eduardo Magalhães (LEM), Bahia state. ![Screenshot](screenshot.png)
+Campo Verde (CV), Mato Grosso state. Luis Eduardo Magalhães (LEM), Bahia state. ![Screenshot](study_area_CV.png)
 
 ### Dependencies
 
@@ -21,4 +21,4 @@ python cl_cv.py
 
 ### Method
 
-![Screenshot](screenshot.png)
+![Screenshot](simsiam_last.png)
