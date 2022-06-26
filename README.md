@@ -10,7 +10,8 @@ This paper presents a self-supervised approach that uses the redundancy reductio
 
 ### Dataset
 
-Campo Verde (CV), Mato Grosso state. Luis Eduardo Magalhães (LEM), Bahia state. 
+Location of the Campo Verde dataset in the state of Mato Grosso, Brazil. It comprises 513 fields divided into training (black fields) and validation (gray fields) sets.
+
 <p align="center">
   <img 
     width="800"
@@ -26,7 +27,7 @@ Please install PyTorch and download the Campo Verde dataset. This codebase has b
 python cl_cv.py
 ```
 
-### Method
+### SimSiam architecture.
 
 <p align="center">
   <img 
