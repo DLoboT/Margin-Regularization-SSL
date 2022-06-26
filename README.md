@@ -28,4 +28,10 @@ python cl_cv.py
 
 ### Method
 
-![Screenshot](simsiam_last.png)
+<p align="center">
+  <img 
+    width="500"
+    height="500"
+    src = simsiam_last.png
+  >
+</p>
