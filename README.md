@@ -10,11 +10,11 @@ This paper presents a self-supervised approach that uses the redundancy reductio
 
 ### Dataset
 
-Campo Verde (CV), Mato Grosso state. Luis Eduardo Magalhães (LEM), Bahia state. ![Screenshot](study_area_CV.png)
+Campo Verde (CV), Mato Grosso state. Luis Eduardo Magalhães (LEM), Bahia state. ![Screenshot](study_area_CV.png| width=100)
 
 ### Dependencies
 
-Please install PyTorch and download the Campo Verde dataset. This codebase has been developed with python version 3.6, PyTorch version 1.7.1, CUDA 11.0 and torchvision 0.8.2. The exact arguments to reproduce the models presented in our paper can be found in the args column of the pretrained models section. For training please run:
+Please install PyTorch and download the Campo Verde dataset. This codebase has been developed with python version 3.6, PyTorch version 1.7.1, CUDA 11.0 and torchvision 0.8.2. The exact arguments to reproduce the models presented in our paper can be found in the cl_cv_config file. For training please run:
 ```
 python cl_cv.py
 ```
