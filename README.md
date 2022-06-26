@@ -15,7 +15,7 @@ Campo Verde (CV), Mato Grosso state. Luis Eduardo Magalhães (LEM), Bahia state.
   <img 
     width="300"
     height="300"
-    src=![Screenshot](study_area_CV.png)
+    ![Screenshot](study_area_CV.png)
   >
 </p>
 
