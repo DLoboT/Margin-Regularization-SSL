@@ -14,8 +14,8 @@ Location of the Campo Verde dataset in the state of Mato Grosso, Brazil. It comp
 
 <p align="center">
   <img 
-    width="800"
-    height="800"
+    width="500"
+    height="500"
     src = study_area_CV.png
   >
 </p>
@@ -38,8 +38,8 @@ Please install PyTorch and download the Campo Verde dataset. This codebase has b
 
 <p align="center">
   <img 
-    width="800"
-    height="500"
+    width="500"
+    height="300"
     src = simsiam_last.png
   >
 </p>
