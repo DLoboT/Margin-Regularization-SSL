@@ -22,7 +22,7 @@ Location of the Campo Verde dataset in the state of Mato Grosso, Brazil. It comp
 
 ### Dependencies
 
-Please install PyTorch and download the Campo Verde dataset at CV [https://ieee-dataport.org/documents/campo-verde-database]. This codebase has been developed with python version 3.6, PyTorch version 1.7.1, CUDA 11.0 and torchvision 0.8.2. The exact arguments to reproduce the models presented in our paper can be found in the cl_cv_config file. For training please run:
+Please install PyTorch and download the Campo Verde dataset at* [Data](https://ieee-dataport.org/documents/campo-verde-database). This codebase has been developed with python version 3.6, PyTorch version 1.7.1, CUDA 11.0 and torchvision 0.8.2. The exact arguments to reproduce the models presented in our paper can be found in the cl_cv_config file. For training please run:
   
   1. Pre-training
   ```
